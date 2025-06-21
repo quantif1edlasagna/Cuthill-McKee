@@ -120,7 +120,6 @@ function cuthill_mckee(V::Int, E::Int, fIncidencia::Function)
 			end
 		end
 	end
-	R = reverse!(R) #reverse-cuthill-mckee (importante!!)
 
 	#montando a matriz nova
 	function permutação(matrix::Matrix{Int}, order::Vector{Int})
@@ -179,70 +178,6 @@ function CuthillMcKee(A::Matrix{Int})
 	esparsidade(nova_adj)
 end
 
-# ╔═╡ 1bd0f6bd-7858-4b6c-9607-cc20d8294fff
-#Teste 2
-let
-A = [
-    0 1 1 1 1 1;
-    1 0 0 0 0 0;
-    1 0 0 0 0 0;
-    1 0 0 0 0 0;
-    1 0 0 0 0 0;
-    1 0 0 0 0 0
-]
-CuthillMcKee(A)
-end
-
-# ╔═╡ 54305379-6f92-4f17-8731-a463ba0faf98
-#teste 3, árvore binária
-let
-A = [
-    0 1 1 0 0 0 0;
-    1 0 0 1 1 0 0;
-    1 0 0 0 0 1 1;
-    0 1 0 0 0 0 0;
-    0 1 0 0 0 0 0;
-    0 0 1 0 0 0 0;
-    0 0 1 0 0 0 0
-]
-CuthillMcKee(A)
-end
-
-# ╔═╡ 63efa274-e1ca-4c55-b980-9f11a779bb76
-#Teste 1
-let
-A = [
-    0 1 0 1 0 0 0 1 0 1;
-    1 0 1 0 1 0 0 0 0 0;
-    0 1 0 1 0 1 0 0 0 0;
-    1 0 1 0 0 0 1 0 0 0;
-    0 1 0 0 0 1 0 1 0 0;
-    0 0 1 0 1 0 1 0 1 0;
-    0 0 0 1 0 1 0 0 0 1;
-    1 0 0 0 1 0 0 0 1 0;
-    0 0 0 0 0 1 0 1 0 1;
-    1 0 0 0 0 0 1 0 1 0
-]
-CuthillMcKee(A)
-end
-
-# ╔═╡ e8d300de-8b9a-41bd-81fc-fdddaf3110c0
-let
-A = [
-    0 1 0 1 0 0 0 1 0 1;
-    1 0 1 0 1 0 0 0 0 0;
-    0 1 0 1 0 1 0 0 0 0;
-    1 0 1 0 0 0 1 0 0 0;
-    0 1 0 0 0 1 0 1 0 0;
-    0 0 1 0 1 0 1 0 1 0;
-    0 0 0 1 0 1 0 0 0 1;
-    1 0 0 0 1 0 0 0 1 0;
-    0 0 0 0 0 1 0 1 0 1;
-    1 0 0 0 0 0 1 0 1 0
-]
-	esparsidade(A)
-end
-
 # ╔═╡ e3b6f48f-1f25-4ece-9bf6-268bc4054ba0
 function gerMatriz(m::Int, p::Float64)
 	if(p < 0 || p > 1)
@@ -260,11 +195,42 @@ function gerMatriz(m::Int, p::Float64)
     return A
 end
 
-# ╔═╡ 7df8d8ed-5166-43f6-bb5b-9a9857e26de5
-let
-A = gerMatriz(30, 0.2)
-CuthillMcKee(A)
+# ╔═╡ 1bd0f6bd-7858-4b6c-9607-cc20d8294fff
+#Teste 1
+begin
+J = gerMatriz(10, 0.3)
+CuthillMcKee(J)
 end
+
+# ╔═╡ 647faf27-a430-4b36-b9e4-f2c249272e24
+esparsidade(J)
+
+# ╔═╡ 4036c3cc-578c-470a-9ddc-7172ce0d00c7
+begin #teste 2
+	L = gerMatriz(20, 0.2)
+	CuthillMcKee(L)
+end
+
+# ╔═╡ 4d4b1fc2-d547-4d4a-9c91-daf61346d3e8
+esparsidade(L) #teste2
+
+# ╔═╡ 7df8d8ed-5166-43f6-bb5b-9a9857e26de5
+begin #Teste 3
+K1 = gerMatriz(30, 0.2)
+CuthillMcKee(K1)
+end
+
+# ╔═╡ 6f8bdd73-46e8-458e-87f5-62c9b5f03983
+esparsidade(K1) #teste 3
+
+# ╔═╡ 92520eb9-2596-4151-a3da-62c4bcfcc1c3
+begin #teste 4
+	ç = gerMatriz(50, 0.2)
+	CuthillMcKee(ç)
+end
+
+# ╔═╡ ca412e78-3779-4681-ac04-67d6940ee5ab
+esparsidade(ç) #teste 4
 
 # ╔═╡ baf0ff33-4909-4161-94f2-0a15a7d5e29c
 function testador(n::Int, d::Int, t::Int)
@@ -1488,11 +1454,14 @@ version = "1.4.1+2"
 # ╠═5181f021-b72a-4aff-95ac-aade23236654
 # ╠═70d0469b-88d3-4980-9bc5-707ada6d865d
 # ╠═1bd0f6bd-7858-4b6c-9607-cc20d8294fff
-# ╠═54305379-6f92-4f17-8731-a463ba0faf98
-# ╠═63efa274-e1ca-4c55-b980-9f11a779bb76
-# ╠═e8d300de-8b9a-41bd-81fc-fdddaf3110c0
+# ╠═647faf27-a430-4b36-b9e4-f2c249272e24
 # ╠═4d5e11a7-ad23-420e-892c-66cc43481a94
+# ╠═4036c3cc-578c-470a-9ddc-7172ce0d00c7
+# ╠═4d4b1fc2-d547-4d4a-9c91-daf61346d3e8
 # ╠═7df8d8ed-5166-43f6-bb5b-9a9857e26de5
+# ╠═6f8bdd73-46e8-458e-87f5-62c9b5f03983
+# ╠═92520eb9-2596-4151-a3da-62c4bcfcc1c3
+# ╠═ca412e78-3779-4681-ac04-67d6940ee5ab
 # ╠═e3b6f48f-1f25-4ece-9bf6-268bc4054ba0
 # ╠═baf0ff33-4909-4161-94f2-0a15a7d5e29c
 # ╠═ec829099-1721-4378-b108-7fc6a9b01c18
